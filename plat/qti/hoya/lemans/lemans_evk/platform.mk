@@ -58,6 +58,10 @@ PLAT_INCLUDES		:=	-Iinclude/plat/common/					\
 				-I${PLAT_PATH}/hoya/qtiseclib/inc/${CHIPSET}
 
 include lib/xlat_tables_v2/xlat_tables.mk
+include drivers/qti/smem/smem.mk
+include drivers/qti/platforminfo/platforminfo.mk
+include drivers/qti/chipinfo/chipinfo.mk
+
 PLAT_BL_COMMON_SOURCES	+=	common/desc_image_load.c				\
 				drivers/qti/crypto/rng.c				\
 				lib/cpus/aarch64/cortex_a78c.S				\
@@ -66,7 +70,8 @@ PLAT_BL_COMMON_SOURCES	+=	common/desc_image_load.c				\
 				$(PLAT_PATH)/common/src/$(ARCH)/qti_uart_console.S	\
 				$(PLAT_PATH)/common/src/qti_stack_protector.c		\
 				$(PLAT_PATH)/common/src/qti_common.c			\
-				${XLAT_TABLES_LIB_SRCS}
+				${XLAT_TABLES_LIB_SRCS}					\
+				${CHIPINFO_SOURCES}
 
 BL2_SOURCES		+=	drivers/io/io_fip.c					\
 				drivers/io/io_memmap.c					\
