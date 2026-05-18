@@ -6,7 +6,6 @@
 #ifndef PLATFORMINFO_H
 #define PLATFORMINFO_H
 
-#include <stdbool.h>
 #include <stdint.h>
 
 #include "platforminfo_defs.h"
@@ -71,21 +70,6 @@ uint32_t platforminfo_get_version(void);
  *   platforminfo_init() must have been called prior to this function.
  */
 uint32_t platforminfo_get_subtype(void);
-
-/**
- * Returns the platform fusion status.
- *
- * A Fusion platform combines an application processor and a modem
- * processor on separate dies connected via an interposer.
- *
- * @return
- *   TRUE  -- The platform is a Fusion variant.
- *   FALSE -- The platform is not a Fusion variant.
- *
- * @dependencies
- *   platforminfo_init() must have been called prior to this function.
- */
-bool platforminfo_get_fusion(void);
 
 /**
  * Returns the value associated with a given platform key.

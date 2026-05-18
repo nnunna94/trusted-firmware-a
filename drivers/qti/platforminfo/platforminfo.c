@@ -13,7 +13,6 @@ typedef struct {
 	platforminfo_platform_type_t platform;
 	uint32_t version;
 	uint32_t subtype;
-	bool fusion;
 	uint32_t oem_variant_id;
 } platforminfo_platform_info_t;
 
@@ -51,8 +50,6 @@ platforminfo_result_t platforminfo_init(void)
 	drv_ctxt->platform_info.platform = smem->platform_type;
 	drv_ctxt->platform_info.version = smem->platform_version;
 	drv_ctxt->platform_info.subtype = smem->platform_subtype;
-	drv_ctxt->platform_info.fusion = smem->fusion;
-
 	if (smem->format >= PLATFORMINFO_SMEM_VERSION_OEM_VARIANT) {
 		drv_ctxt->platform_info.oem_variant_id = smem->oem_variant_id;
 	} else {
@@ -107,11 +104,6 @@ uint32_t platforminfo_get_version(void)
 uint32_t platforminfo_get_subtype(void)
 {
 	return platforminfo_driver_ctxt.platform_info.subtype;
-}
-
-bool platforminfo_get_fusion(void)
-{
-	return platforminfo_driver_ctxt.platform_info.fusion;
 }
 
 platforminfo_result_t platforminfo_get_key_value(platforminfo_key_type_t key,
