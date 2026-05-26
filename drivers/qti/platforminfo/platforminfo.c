@@ -50,13 +50,16 @@ platforminfo_result_t platforminfo_init(void)
 	drv_ctxt->platform_info.platform = smem->platform_type;
 	drv_ctxt->platform_info.version = smem->platform_version;
 	drv_ctxt->platform_info.subtype = smem->platform_subtype;
-	if (smem->format >= PLATFORMINFO_SMEM_VERSION_OEM_VARIANT) {
+
+	/* OEM Variant ID support added from SMEM Structure formtat version 17. */
+	if (smem->format >= PLATFORMINFO_SMEM_FORMAT_VERSION(17)) {
 		drv_ctxt->platform_info.oem_variant_id = smem->oem_variant_id;
 	} else {
 		drv_ctxt->platform_info.oem_variant_id = 0;
 	}
 
-	if (smem->format >= PLATFORMINFO_SMEM_VERSION_KVP) {
+    /* KVP support added from SMEM Structure formtat version 17. */
+	if (smem->format >= PLATFORMINFO_SMEM_FORMAT_VERSION(18)) {
 		drv_ctxt->num_kvps = smem->num_kvps;
 
 		if (drv_ctxt->num_kvps > 0) {

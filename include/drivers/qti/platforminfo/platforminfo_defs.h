@@ -15,6 +15,12 @@
 #define PLATFORMINFO_VERSION(major, minor) (((major) << 16) | (minor))
 
 /*
+ * Version of the platforminfo_smem_t structure. Minor revision ticks
+ * are backwards compatible.
+ */
+#define PLATFORMINFO_SMEM_FORMAT_VERSION(x) x
+
+/*
  * PlatformInfo return values
  */
 typedef enum {
@@ -100,11 +106,7 @@ typedef enum {
 	PLATFORMINFO_KEY_32BITS = 0x7FFFFFFF
 } platforminfo_key_type_t;
 
-/*
- * Format of the platforminfo_smem_t structure. Minor revision ticks
- * are backwards compatible.
- */
-#define PLATFORMINFO_SMEM_FORMAT PLATFORMINFO_VERSION(0, 22)
+
 
 /*
  * Length of the build ID buffer in platforminfo_smem_t.
@@ -128,15 +130,6 @@ typedef enum {
  */
 #define PLATFORMINFO_MAX_KVPS 16
 
-/*
- * Macro for Platform Info version which adds support for OEM Variant ID.
- */
-#define PLATFORMINFO_SMEM_VERSION_OEM_VARIANT PLATFORMINFO_VERSION(0, 17)
-
-/*
- * Macro for Platform Info version which adds support for KVP data.
- */
-#define PLATFORMINFO_SMEM_VERSION_KVP PLATFORMINFO_VERSION(0, 18)
 
 /*
  * MEM structure for PMIC information.

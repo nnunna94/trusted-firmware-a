@@ -19,8 +19,8 @@
  *
  * @return
  *   PLATFORMINFO_SUCCESS        -- Initialization succeeded.
- *   PLATFORMINFO_ERROR_NOT_FOUND -- SMEM item was not found or is empty.
- *   PLATFORMINFO_ERROR_INVALID_DATA -- KVP offset in SMEM is out of bounds.
+ *   PLATFORMINFO_ERROR_NOT_FOUND -- Required Platform specific Information was not found in SMEM.
+ *   PLATFORMINFO_ERROR_INVALID_DATA -- Invalid platformInfo related Data found in SMEM.
  */
 platforminfo_result_t platforminfo_init(void);
 
@@ -60,11 +60,13 @@ uint32_t platforminfo_get_version(void);
 /**
  * Returns the platform subtype.
  *
- * The subtype further qualifies the platform type to distinguish
- * between hardware variants within the same platform family.
+ * The subtype further qualifies the platform type to identify major
+ * differences within the same platform family. For a given platform type
+ * (e.g., IDP, MTP), the subtype distinguishes between variants that differ
+ * in hardware attaches or key components.
  *
  * @return
- *   Platform subtype of the current target.
+ *   Platform subtype of the current paltformtype.
  *
  * @dependencies
  *   platforminfo_init() must have been called prior to this function.
@@ -85,7 +87,7 @@ uint32_t platforminfo_get_subtype(void);
  * @return
  *   PLATFORMINFO_SUCCESS                  -- Key was found; *value is valid.
  *   PLATFORMINFO_ERROR_INVALID_PARAMETER  -- value pointer is NULL.
- *   PLATFORMINFO_ERROR                    -- Key was not found in the KVP table.
+ *   PLATFORMINFO_ERROR_NOT_FOUND          -- Key was not found in the CDT.
  *
  * @dependencies
  *   platforminfo_init() must have been called prior to this function.
