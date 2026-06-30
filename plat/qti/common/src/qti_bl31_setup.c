@@ -14,6 +14,9 @@
 #include <drivers/generic_delay_timer.h>
 #include <drivers/qti/accesscontrol/accesscontrol.h>
 #include <drivers/qti/accesscontrol/xpu.h>
+#include <drivers/qti/chipinfo/chipinfo.h>
+#include <drivers/qti/clock/clock.h>
+#include <drivers/qti/icb/icb_error.h>
 #include <drivers/qti/pdc/pdc.h>
 #include <drivers/qti/pwr_utils/pwr_utils.h>
 #include <drivers/qti/qtimer/qtimer.h>
@@ -104,14 +107,22 @@ void bl31_platform_setup(void)
 	plat_qti_gic_init();
 	qti_pdc_init();
 	qti_pwr_utils_init();
+	if (qti_chipinfo_init() != CHIPINFO_SUCCESS) {
+		WARN("ChipInfo initialization error\n");
+	}
+	qti_clock_init();
 	qti_smmu_init();
 	qti_interrupt_svc_init(bl32_image_ep_info.pc != 0);
+	qti_icb_error_init();
 	qti_sec_core_init();
 	qti_qtimer_init();
 	if (qti_watchdog_init())
 		ERROR("Watchdog initialization error\n");
 	qti_accesscontrol_init();
 	qtiseclib_bl31_platform_setup();
+
+	/* TZ init is complete; release clocks only needed during init. */
+	qti_clock_init_done();
 
 	/* set boot state to cold boot complete. */
 	g_qti_bl31_cold_booted = 0x1;
